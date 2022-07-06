@@ -4,7 +4,10 @@
             :text="text"
             :index="nowIndex"/>
 
-        <current-stats :user-stats="userStats"/>
+        <current-stats
+            :user-stats="userStats"
+            :error="lastLetterIsError"
+            :start="start"/>
 
         <input-area
             :input-value="lastLetter"
@@ -47,6 +50,7 @@
                     seconds: 0,
                 },
                 sInterval: '',
+                lastLetterIsError: false,
             };
         },
 
@@ -60,10 +64,12 @@
                 const nowLetter = this.textArray.at(this.nowIndex);
                 if (nowLetter === this.lastLetter) {
                     this.nowIndex += 1;
+                    this.lastLetterIsError = false;
                     if (this.nowIndex >= this.textArray.length) this.finishGame();
                     else this.userStats.symbols += 1;
                 } else {
                     this.userStats.errors += 1;
+                    this.lastLetterIsError = true;
                 }
                 this.getWordPerMinutes();
                 this.getErrorsPercent();
@@ -84,7 +90,6 @@
                 }, this.startInterval);
             },
             gameStarted() {
-                console.log('game started');
                 this.userStats.startTime = Date.now();
                 this.sInterval = setInterval(() => {
                     this.userStats.seconds += 1;

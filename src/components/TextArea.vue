@@ -7,10 +7,8 @@
                 :class="{ current: index === key }"
                 :key="key">
                 <span
-                    :ref="`${letter}_${key}`"
                     v-if="letter === ' '">&nbsp;</span>
                 <span
-                    :ref="`${letter}_${key}`"
                     v-else>{{ letter }}</span>
             </div>
         </div>
@@ -29,12 +27,6 @@
                 type: Number,
                 default: 0,
             },
-        },
-        computed: {
-            nowLetter() {
-                return this.data;
-            },
-            
         },
     };
 </script>

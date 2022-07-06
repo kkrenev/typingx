@@ -1,9 +1,11 @@
 <template>
-    <div class="current-stats py-2">
+    <div
+        class="current-stats py-2"
+        :class="{ good: !error && start, bad: error && start }">
         <v-img
             :src="require(`@/assets/img/hand-keyboard.jpeg`)"
-            class="image py-2"/>
-        <div class="stats">
+            class="image"/>
+        <div class="stats py-2">
             <div class="time item">
                 <v-icon size="30">mdi-timer-outline</v-icon>{{ userStats.seconds }} сек
             </div>
@@ -15,7 +17,8 @@
                     size="30"
                     color="red">
                     mdi-alert
-                </v-icon>{{ userStats.errors }} / {{ userStats.errorsPercent }}% ошбк
+                </v-icon>{{ userStats.errors }} ошбк /
+                {{ userStats.errorsPercent }}%
             </div>
         </div>
     </div>
@@ -29,15 +32,24 @@
                 type: Object,
                 default: () => {},
             },
+            error: {
+                type: Boolean,
+                default: false,
+            },
+            start: {
+                type: Boolean,
+                default: false,
+            },
         },
     };
 </script>
 
 <style lang="scss" scoped>
+
 .current-stats {
 	height: 100%;
 	border: 1px solid #ccc;
-	background-color: #f5f5f5;
+    background-color: #FFF;
 	margin-top: 20px;
 	display: flex;
 	flex-direction: column;
@@ -49,7 +61,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: 10px;
+        gap: 5px;
 		font-weight: bold;
 		font-size: 30px;
 
@@ -64,5 +76,14 @@
 	.image {
 		width: 50%;
 	}
+}
+
+.good {
+    border: 1px solid teal;
+    background: rgba(0, 128, 128, 0.1);
+}
+.bad {
+    border: 1px solid red;
+    background: rgba(255, 0, 0, 0.1);
 }
 </style>

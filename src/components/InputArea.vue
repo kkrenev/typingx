@@ -5,7 +5,6 @@
             :value="inputValue"
             @input="onInput"
             outlined
-            class="textarea"
             autofocus/>
     </div>
 </template>
@@ -22,7 +21,6 @@
         methods: {
             onInput(e) {
                 this.$emit('checkEquals', e);
-                console.log(e);
             },
         },
     };
@@ -30,10 +28,6 @@
 
 <style lang="scss" scoped>
 .input {
-    margin-top: 20px;
-    .textarea {
-        border-radius: 12px;
-        color: teal;
-    }
+	margin-top: 20px;
 }
 </style>
