@@ -1,11 +1,15 @@
 <template>
     <div class="textarea">
-        <div class="text">
+        <div
+            v-for="(str, strId) in strings"
+            :key="strId"
+            :class="{ current: strId < strIndex }"
+            class="text">
             <div
-                class="letter-wrapper"
-                v-for="(letter, key) in text"
-                :class="{ current: index === key }"
-                :key="key">
+                v-for="(letter, key) in str"
+                :key="key"
+                :class="{ current: index === key && strIndex === strId, complete: ((key < index && strId <= strIndex) || strId < strIndex) }"
+                class="letter-wrapper">
                 <span
                     v-if="letter === ' '">&nbsp;</span>
                 <span
@@ -19,11 +23,15 @@
     export default {
         name: 'text-area',
         props: {
-            text: {
-                type: String,
-                default: '',
+            strings: {
+                type: Array,
+                default: () => [],
             },
             index: {
+                type: Number,
+                default: 0,
+            },
+            strIndex: {
                 type: Number,
                 default: 0,
             },
@@ -35,22 +43,34 @@
 .textarea {
     width: 800px;
     height: 100%;
-    background-color: #cfcfcf;
+    background-color: #ebebeb;
     border: 1px solid #aaa;
     border-radius: 12px;
     padding: 12px;
     text-align: left;
 
     .text {
-        font-size: 24px;
+        font-size: 30px;
         display: flex;
         flex-wrap: wrap;
-        gap: 1px 0;
+        margin: 7px 0;
+        gap: 0 0;
+        height: 28px;
+        font-weight: 400;
+
+        .letter-wrapper {
+            line-height: 24px;
+        }
 
         .current {
-            outline: 1px solid red;
+            text-decoration: underline;
+            text-underline-offset: 1px;
+            color: blue;
         }
-        
+
+        .complete {
+            color: #999;
+        }
     }
 }
 </style>

@@ -1,11 +1,12 @@
 <template>
     <div class="input">
         <v-text-field
-            type="text"
             :value="inputValue"
-            @input="onInput"
+            autofocus
             outlined
-            autofocus/>
+            type="text"
+            @input="onInput"
+            @keydown.enter="$emit('enter', 'enter')"/>
     </div>
 </template>
 
@@ -17,17 +18,23 @@
                 type: String,
                 default: '',
             },
-        },
-        methods: {
-            onInput(e) {
-                this.$emit('checkEquals', e);
+            error: {
+                type: Boolean,
+                default: false,
             },
+        },
+
+        methods: {
+            onInput(data) {
+                this.$emit('checkEquals', data);
+            },
+
         },
     };
 </script>
 
 <style lang="scss" scoped>
 .input {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 </style>
